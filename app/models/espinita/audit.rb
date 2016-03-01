@@ -3,16 +3,17 @@ module Espinita
     belongs_to :auditable, polymorphic: true
     belongs_to :user, polymorphic: true
 
+    scope :descending, ->{ reorder("version DESC")}
+    scope :creates, ->{ where(action: 'create')}
+    scope :updates, ->{ where(action: 'update') }
+    scope :destroys, ->{ where(action: 'destroy') }
 
-    scope :descending,    ->{ reorder("version DESC")}
-    scope :creates,       ->{ where({:action => 'create'})}
-    scope :updates,       ->{ where({:action => 'update'})}
-    scope :destroys,      ->{ where({:action => 'destroy'})}
-
-    scope :up_until,      ->(date_or_time){where("created_at <= ?", date_or_time) }
-    scope :from_version,  ->(version){where(['version >= ?', version]) }
-    scope :to_version,    ->(version){where(['version <= ?', version]) }
-    scope :auditable_finder, ->(auditable_id, auditable_type){where(auditable_id: auditable_id, auditable_type: auditable_type)}
+    scope :up_until, ->(date_or_time) { where("created_at <= ?", date_or_time) }
+    scope :from_version, ->(version) { where('version >= ?', version) }
+    scope :to_version, ->(version) { where('version <= ?', version) }
+    scope :auditable_finder, ->(auditable_id, auditable_type) {
+      where(auditable_id: auditable_id, auditable_type: auditable_type)
+    }
 
     serialize :audited_changes
 
@@ -24,7 +25,8 @@ module Espinita
         auditable_id, auditable_type, version])
     end
 
-  private
+    private
+
     def set_version_number
       max = self.class.auditable_finder(auditable_id, auditable_type).maximum(:version) || 0
       self.version = max + 1
@@ -36,6 +38,5 @@ module Espinita
 
       nil # prevent stopping callback chains
     end
-
   end
 end

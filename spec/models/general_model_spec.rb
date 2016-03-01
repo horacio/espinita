@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-
 describe GeneralModel do
-  it{should have_many :audits}
+  it { should have_many :audits }
 
   let(:current_user) do
     FactoryGirl.create(:user)
@@ -433,9 +432,9 @@ describe GeneralModel do
 
   end
 
-  context "skip audits" do 
+  context "skip audits" do
     let!(:general_model) do
-      GeneralModel.disable_audits! do 
+      GeneralModel.disable_audits! do
         FactoryGirl.create(:general_model)
       end
     end

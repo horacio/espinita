@@ -1,8 +1,7 @@
 class GeneralModel < ActiveRecord::Base
-  belongs_to :user
   include Espinita::Auditor
+
+  belongs_to :user
 end
 
-class User < ActiveRecord::Base
-end
-
+class User < ActiveRecord::Base; end

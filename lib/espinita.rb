@@ -1,20 +1,16 @@
-require "espinita/engine"
-require "request_store"
+require 'espinita/engine'
+require 'request_store'
+
+require 'espinita/auditor'
+require 'espinita/auditor_behavior'
+require 'espinita/auditor_request'
 
 module Espinita
-
-  autoload :Auditor, "espinita/auditor"
-  autoload :AuditorBehavior, "espinita/auditor_behavior"
-  autoload :AuditorRequest, "espinita/auditor_request"
-
   class << self
-
     attr_accessor :current_user_method
-   
+
     def current_user_method
       @current_user_method ||= :current_user
     end
-
   end
-
 end

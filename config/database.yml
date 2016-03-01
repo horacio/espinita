@@ -6,13 +6,6 @@ sqlite3: &SQLITE
   adapter: sqlite3
   database: audited_test.sqlite3.db
 
-postgresql: &POSTGRES
-  adapter: postgresql
-  username: postgres
-  password: postgres
-  database: audited_test
-  min_messages: ERROR
-
 mysql: &MYSQL
   adapter: mysql
   host: localhost
